@@ -34,16 +34,18 @@ export function AppLayout() {
   const drawerContent = useMemo(
     () => (
       <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-        <Stack direction='row' spacing={1.5} alignItems='center' sx={{ p: 3 }}>
+        <Stack
+          direction='row'
+          spacing={1.5}
+          alignItems='center'
+          sx={{ py: 3.24, px: 3 }}
+        >
           <Box>
-            <Typography variant='subtitle2' color='text.secondary'>
-              E2E Dashboard
-            </Typography>
-            <Typography variant='h6'>Projetos</Typography>
+            <Typography variant='h6'>E2E Dashboard</Typography>
           </Box>
         </Stack>
         <Divider />
-        <List sx={{ flex: 1, py: 0, pt: 3 }}>
+        <List sx={{ flex: 1, py: 0, pt: 0 }}>
           <ListItemButton
             component={RouterLink}
             to='/'
@@ -52,11 +54,38 @@ export function AppLayout() {
               borderRadius: 2,
               mx: 2,
               my: 2,
+              '&.Mui-selected': {
+                backgroundColor: 'primary.main',
+                color: 'common.white',
+                '&:hover': {
+                  backgroundColor: 'primary.main',
+                },
+                '& .MuiListItemText-primary': {
+                  color: 'common.white',
+                },
+              },
             }}
             onClick={() => setMobileOpen(false)}
           >
             <ListItemText primary='Visão Geral' />
           </ListItemButton>
+
+          <Divider></Divider>
+
+          <Typography>
+            <Box
+              sx={{
+                p: 2,
+                pt: 3,
+                pb: 1,
+                fontWeight: 'bold',
+                color: 'text.secondary',
+              }}
+            >
+              Meus Projetos
+            </Box>
+          </Typography>
+
           {projects.map((project) => {
             const href = `/projects/${project.id}`;
             const active = location.pathname.startsWith(href);
@@ -70,6 +99,16 @@ export function AppLayout() {
                   borderRadius: 2,
                   mx: 2,
                   my: 2,
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.main',
+                    color: 'common.white',
+                    '&:hover': {
+                      backgroundColor: 'primary.main',
+                    },
+                    '& .MuiListItemText-primary': {
+                      color: 'common.white',
+                    },
+                  },
                 }}
                 onClick={() => setMobileOpen(false)}
               >
@@ -107,6 +146,8 @@ export function AppLayout() {
             justifyContent: 'space-between',
             gap: 2,
             flexWrap: 'wrap',
+            marginLeft: '230px',
+            py: 3.24,
           }}
         >
           <Stack direction='row' spacing={2} alignItems='center'>
@@ -115,12 +156,19 @@ export function AppLayout() {
                 <MenuRoundedIcon />
               </IconButton>
             )}
-            <Box>
-              <Typography variant='subtitle2' color='text.secondary'>
-                End-to-End Reports
-              </Typography>
-              <Typography variant='h6'>Release health</Typography>
-            </Box>
+            <Box
+              component='img'
+              src='/logo.png'
+              alt='E2E Dashboard'
+              sx={{
+                height: 'auto',
+                maxWidth: 200,
+                pl: 3,
+                objectFit: 'contain',
+                filter: isDarkMode ? 'brightness(0) invert(1)' : 'none',
+                transition: 'filter 0.2s ease',
+              }}
+            />
           </Stack>
           <Stack direction='row' spacing={1.5} alignItems='center'>
             <IconButton
@@ -183,7 +231,7 @@ export function AppLayout() {
         component='main'
         sx={{
           flexGrow: 1,
-          p: { xs: 3, md: 4 },
+          p: { xs: 3, md: 6 },
           mt: { xs: 8, md: 0 },
           backgroundColor: 'background.default',
         }}
