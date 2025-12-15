@@ -44,6 +44,19 @@ export function AppLayout() {
         </Stack>
         <Divider />
         <List sx={{ flex: 1, py: 0, pt: 3 }}>
+          <ListItemButton
+            component={RouterLink}
+            to='/'
+            selected={location.pathname === '/'}
+            sx={{
+              borderRadius: 2,
+              mx: 2,
+              my: 2,
+            }}
+            onClick={() => setMobileOpen(false)}
+          >
+            <ListItemText primary='Visão Geral' />
+          </ListItemButton>
           {projects.map((project) => {
             const href = `/projects/${project.id}`;
             const active = location.pathname.startsWith(href);
