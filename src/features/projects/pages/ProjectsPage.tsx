@@ -1,4 +1,7 @@
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
 import WarningAmberOutlinedIcon from '@mui/icons-material/WarningAmberOutlined';
@@ -9,6 +12,7 @@ import { projects } from '../data/projects.ts';
 import { ProjectCard } from '../components/ProjectCard.tsx';
 import { formatPercent } from '../../../utils/format.ts';
 import { useDashboardFilters } from '../../../providers/DashboardFilters.tsx';
+import { useProjectsData } from '../hooks/useProjectsData.ts';
 
 const RANGE_LABEL: Record<string, string> = {
   '7d': 'últimos 7 dias',
@@ -18,11 +22,23 @@ const RANGE_LABEL: Record<string, string> = {
 
 export function ProjectsPage() {
   const { timeRange } = useDashboardFilters();
-  const totalProjects = projects.length;
+  const { data, isFetching, refetch } = useProjectsData();
+  const syncedProjects = data?.items ?? projects;
+  const warnings = data?.warnings ?? [];
+  const hasWarnings = warnings.length > 0;
+  const warningMessage = hasWarnings
+    ? warnings.length === 1
+      ? warnings[0]
+      : `Ocorreram falhas ao sincronizar algumas branches. ${warnings.join(
+          ' '
+        )}`
+    : '';
+
+  const totalProjects = syncedProjects.length;
   const avgPassRate =
-    projects.reduce((acc, project) => acc + project.passRate, 0) /
+    syncedProjects.reduce((acc, project) => acc + project.passRate, 0) /
     totalProjects;
-  const unstableBranches = projects
+  const unstableBranches = syncedProjects
     .map(
       (project) =>
         project.branches.filter((branch) => branch.status !== 'passing').length
@@ -35,6 +51,21 @@ export function ProjectsPage() {
         title='Projetos monitorados'
         subtitle={`Panorama consolidado dos ${RANGE_LABEL[timeRange]}.`}
       />
+
+      {isFetching && <LinearProgress sx={{ width: '100%' }} />}
+
+      {hasWarnings && (
+        <Alert
+          severity='warning'
+          action={
+            <Button color='inherit' size='small' onClick={() => refetch()}>
+              Tentar novamente
+            </Button>
+          }
+        >
+          {warningMessage}
+        </Alert>
+      )}
 
       <Box
         sx={{
@@ -70,7 +101,7 @@ export function ProjectsPage() {
           gridTemplateColumns: { xs: '1fr', lg: 'repeat(2, minmax(0, 1fr))' },
         }}
       >
-        {projects.map((project) => (
+        {syncedProjects.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
       </Box>

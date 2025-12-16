@@ -1,12 +1,20 @@
-import Stack from '@mui/material/Stack';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import LinearProgress from '@mui/material/LinearProgress';
+import Stack from '@mui/material/Stack';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components/PageHeader.tsx';
-import { getBranch, getProjectById } from '../../projects/data/projects.ts';
+import {
+  buildBranchReportPath,
+  getBranch,
+  getProjectById,
+  projects,
+} from '../../projects/data/projects.ts';
 import { ReportViewer } from '../components/ReportViewer.tsx';
 import { RunHistory } from '../components/RunHistory.tsx';
 import { EmptyState } from '../../../components/EmptyState.tsx';
+import { useProjectsData } from '../../projects/hooks/useProjectsData.ts';
 
 export function BranchReportPage() {
   const navigate = useNavigate();
@@ -26,8 +34,21 @@ export function BranchReportPage() {
     );
   }
 
-  const project = getProjectById(projectId);
-  const branch = project ? getBranch(projectId, branchId) : undefined;
+  const { data, isFetching } = useProjectsData();
+  const syncedProjects = data?.items ?? projects;
+  const project = getProjectById(projectId, syncedProjects);
+  const branch = project
+    ? getBranch(projectId, branchId, syncedProjects)
+    : undefined;
+  const warnings = data?.warnings ?? [];
+  const warningText =
+    warnings.length > 0
+      ? warnings.length === 1
+        ? warnings[0]
+        : `Ocorreram falhas ao sincronizar algumas branches. ${warnings.join(
+            ' '
+          )}`
+      : '';
 
   if (!project || !branch) {
     return (
@@ -39,6 +60,13 @@ export function BranchReportPage() {
       />
     );
   }
+
+  const computedReportPath = buildBranchReportPath(project.id, branch.id);
+  const reportSrc =
+    branch.reportPath && !branch.reportPath.startsWith('/reports/')
+      ? branch.reportPath
+      : computedReportPath;
+  console.log({ reportSrc });
 
   return (
     <Stack spacing={4}>
@@ -60,7 +88,11 @@ export function BranchReportPage() {
         }
       />
 
-      <ReportViewer src={branch.reportPath} />
+      <ReportViewer src={reportSrc} />
+
+      {isFetching && <LinearProgress sx={{ width: '100%' }} />}
+
+      {warningText && <Alert severity='warning'>{warningText}</Alert>}
 
       {branch.runs.length > 0 && <RunHistory runs={branch.runs} />}
     </Stack>

@@ -1,73 +1,40 @@
-# React + TypeScript + Vite
+# E2E Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicacao em Vite + React utilizada para acompanhar os resultados dos pipelines E2E (Playwright) de diferentes squads. Os dados comecam em modo mock e podem ser sincronizados com os repositorios GitLab para mostrar as branches reais e seus ultimos commits.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Node.js 20+
+- npm 10+
 
-## React Compiler
+## Configuracao rapida
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Instale dependencias: `npm install`
+2. Copie o arquivo `.env.example` para `.env` e ajuste as variaveis (detalhes abaixo)
+3. Execute o servidor: `npm run dev`
+4. Acesse `http://localhost:5173`
 
-## Expanding the ESLint configuration
+### Variaveis de ambiente
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| Variavel              | Obrigatoria                                         | Descricao                                   |
+| --------------------- | --------------------------------------------------- | ------------------------------------------- |
+| `VITE_GITLAB_API_URL` | Nao (padrao `https://git.datasystec.com.br/api/v4`) | Endpoint base da API GitLab                 |
+| `VITE_GITLAB_TOKEN`   | Sim para sincronizar                                | Personal Access Token com escopo `read_api` |
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Sem o token, o dashboard segue usando os mocks e mostra um aviso solicitando a configuracao. Quando o token e definido, o app busca todas as branches diretamente do GitLab e atualiza as paginas de projetos/branches automaticamente.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Estrutura de dados
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `src/features/projects/data/projects.ts`: mocks iniciais com metadados dos projetos e link (`urlGit`) para o repositorio.
+- `src/features/projects/api/gitlab.ts`: utilitario responsavel por converter o `urlGit` em chamadas REST e normalizar as branches.
+- `src/features/projects/hooks/useProjectsData.ts`: hook com React Query que hidrata os mocks com as informacoes reais.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts uteis
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run dev`: inicia o servidor Vite com hot reload.
+- `npm run build`: gera a versao otimizda do dashboard.
+- `npm run test`: executa os testes com Vitest.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Relatorios Playwright
+
+Os relatorios HTML gerados pelo Playwright ficam em `reports/` e sao servidos de forma estatica. Cada branch aponta para o relatorio correspondente, permitindo abrir o report completo diretamente pela interface.
