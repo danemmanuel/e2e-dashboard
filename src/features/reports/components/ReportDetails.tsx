@@ -61,6 +61,18 @@ const ATTEMPT_META: Record<AttemptStatus, StatusMeta> = {
 
 const ANSI_REGEX = /\u001B\[[0-9;]*m/g;
 
+function buildPlaywrightTestUrl(baseUrl: string, testId?: string) {
+  if (!testId) {
+    return baseUrl;
+  }
+
+  const [withoutHash] = baseUrl.split('#');
+  const normalizedId = testId.replace(/^.+?(508f5f)/, '$1');
+  const encoded = encodeURIComponent(normalizedId);
+
+  return `${withoutHash}#?testId=${encoded}`;
+}
+
 type SpecWithFilteredTests = PlaywrightReportSpec & {
   tests: PlaywrightReportTest[];
 };
@@ -157,6 +169,10 @@ export function ReportDetails({
   const selectedTest = useMemo(
     () => tests.find((test) => test.id === selectedTestId) ?? null,
     [tests, selectedTestId]
+  );
+  const selectedTestPlaywrightUrl = useMemo(
+    () => buildPlaywrightTestUrl(reportSrc, selectedTest?.id),
+    [reportSrc, selectedTest]
   );
 
   if (!tests.length) {
@@ -335,6 +351,17 @@ export function ReportDetails({
                     />
                   )}
                 </Stack>
+                <Button
+                  component='a'
+                  href={selectedTestPlaywrightUrl}
+                  target='_blank'
+                  rel='noreferrer'
+                  variant='contained'
+                  size='small'
+                  sx={{ alignSelf: 'flex-start' }}
+                >
+                  Acessar Cenário no Playwright
+                </Button>
                 <Divider />
                 <Stack spacing={2} sx={{ flex: 1, overflowY: 'auto' }}>
                   {selectedTest.attempts.map((attempt, index) => (
@@ -402,6 +429,7 @@ export function ReportDetails({
                             attachments={attempt.attachments}
                             attachmentsBasePath={attachmentsBasePath}
                             reportSrc={reportSrc}
+                            testId={selectedTest.id}
                           />
                         </Stack>
                       </AccordionDetails>
@@ -516,10 +544,12 @@ function AttemptAttachments({
   attachments,
   attachmentsBasePath,
   reportSrc,
+  testId,
 }: {
   attachments: PlaywrightReportTest['attempts'][number]['attachments'];
   attachmentsBasePath?: string;
   reportSrc: string;
+  testId?: string;
 }) {
   const buildAttachmentUrl = (rawPath?: string) => {
     if (!attachmentsBasePath || !rawPath) {
@@ -535,6 +565,7 @@ function AttemptAttachments({
 
     return `${attachmentsBasePath}/${fileName}`;
   };
+  const playwrightTestUrl = buildPlaywrightTestUrl(reportSrc, testId);
 
   return (
     <Box>
@@ -563,7 +594,7 @@ function AttemptAttachments({
                 {attachmentUrl ? (
                   <Button
                     component='a'
-                    href={reportSrc}
+                    href={playwrightTestUrl}
                     target='_blank'
                     rel='noreferrer'
                     size='small'
