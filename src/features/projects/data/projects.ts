@@ -30,6 +30,7 @@ export interface ProjectInfo {
   description: string;
   owner: string;
   urlGit: string;
+  reportSlug?: string;
   passRate: number;
   coverage: number;
   lastRunAt: string;
@@ -43,10 +44,28 @@ function normalizeReportSegment(value: string) {
   return value.trim().replace(whitespaceRegex, '-');
 }
 
-export function buildBranchReportPath(projectId: string, branchId: string) {
-  return `/reports/${normalizeReportSegment(
-    projectId
-  )}/${normalizeReportSegment(branchId)}/index.html`;
+function buildBranchReportBase(
+  project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
+  branchId: string
+) {
+  const projectSegment = normalizeReportSegment(
+    project.reportSlug ?? project.id
+  );
+  return `/reports/${projectSegment}/${normalizeReportSegment(branchId)}`;
+}
+
+export function buildBranchReportPath(
+  project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
+  branchId: string
+) {
+  return `${buildBranchReportBase(project, branchId)}/index.html`;
+}
+
+export function buildBranchReportJsonPath(
+  project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
+  branchId: string
+) {
+  return `${buildBranchReportBase(project, branchId)}/report.json`;
 }
 
 export const projects: ProjectInfo[] = [
@@ -56,6 +75,7 @@ export const projects: ProjectInfo[] = [
     description: 'Operacional, Atendimento, Consulta, Pesquisa e Auditoria',
     owner: 'Telerisco',
     urlGit: 'https://git.datasystec.com.br/telerisco/telerisco-front',
+    reportSlug: 'telerisco-front',
     passRate: 96,
     coverage: 82,
     lastRunAt: '2025-12-14T02:15:00Z',
@@ -69,6 +89,7 @@ export const projects: ProjectInfo[] = [
     owner: 'Sompo',
     urlGit:
       'https://git.datasystec.com.br/telerisco/pesquisa-digital/pesquisa-chatbot-react',
+    reportSlug: 'pesquisa-chatbot-react',
     passRate: 94,
     coverage: 80,
     lastRunAt: '2025-12-14T09:05:00Z',

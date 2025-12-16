@@ -20,3 +20,13 @@ export function formatCoverage(passed: number, total: number) {
 export function formatDuration(minutes: number) {
   return `${minutes} min`;
 }
+
+export function formatDurationMs(ms: number) {
+  if (!ms) return '0 s';
+  if (ms < 1000) return `${ms} ms`;
+  if (ms < 60000) return `${(ms / 1000).toFixed(1)} s`;
+  const minutes = ms / 60000;
+  return minutes >= 10
+    ? `${Math.round(minutes)} min`
+    : `${minutes.toFixed(1)} min`;
+}

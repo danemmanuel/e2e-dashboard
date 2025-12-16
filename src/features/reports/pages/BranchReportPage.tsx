@@ -15,6 +15,13 @@ import { ReportViewer } from '../components/ReportViewer.tsx';
 import { RunHistory } from '../components/RunHistory.tsx';
 import { EmptyState } from '../../../components/EmptyState.tsx';
 import { useProjectsData } from '../../projects/hooks/useProjectsData.ts';
+import { ReportStats } from '../components/ReportStats.tsx';
+import { ReportTestsTable } from '../components/ReportTestsTable.tsx';
+import {
+  usePlaywrightReport,
+  deriveBranchStatusFromStats,
+  buildRunFromStats,
+} from '../hooks/usePlaywrightReport.ts';
 
 export function BranchReportPage() {
   const navigate = useNavigate();
@@ -34,12 +41,17 @@ export function BranchReportPage() {
     );
   }
 
-  const { data, isFetching } = useProjectsData();
+  const { data, isFetching: isProjectsFetching } = useProjectsData();
   const syncedProjects = data?.items ?? projects;
   const project = getProjectById(projectId, syncedProjects);
   const branch = project
     ? getBranch(projectId, branchId, syncedProjects)
     : undefined;
+  const {
+    data: playwrightReport,
+    isFetching: isReportFetching,
+    error: reportError,
+  } = usePlaywrightReport(project, branch?.id);
   const warnings = data?.warnings ?? [];
   const warningText =
     warnings.length > 0
@@ -61,12 +73,19 @@ export function BranchReportPage() {
     );
   }
 
-  const computedReportPath = buildBranchReportPath(project.id, branch.id);
+  const computedReportPath = buildBranchReportPath(project, branch.id);
   const reportSrc =
     branch.reportPath && !branch.reportPath.startsWith('/reports/')
       ? branch.reportPath
       : computedReportPath;
-  console.log({ reportSrc });
+  const derivedStatus = playwrightReport?.stats
+    ? deriveBranchStatusFromStats(playwrightReport.stats)
+    : branch.status;
+  const runHistoryData = playwrightReport?.stats
+    ? [buildRunFromStats(playwrightReport.stats, branch)]
+    : branch.runs;
+  const shouldShowMissingReportInfo =
+    !reportError && !isReportFetching && playwrightReport === null;
 
   return (
     <Stack spacing={4}>
@@ -90,11 +109,34 @@ export function BranchReportPage() {
 
       <ReportViewer src={reportSrc} />
 
-      {isFetching && <LinearProgress sx={{ width: '100%' }} />}
+      {isProjectsFetching && <LinearProgress sx={{ width: '100%' }} />}
+      {isReportFetching && <LinearProgress sx={{ width: '100%' }} />}
 
       {warningText && <Alert severity='warning'>{warningText}</Alert>}
+      {reportError instanceof Error && (
+        <Alert severity='error'>
+          Falha ao carregar dados do Playwright: {reportError.message}
+        </Alert>
+      )}
+      {shouldShowMissingReportInfo && (
+        <Alert severity='info'>
+          Nenhum report.json foi encontrado para esta branch.
+        </Alert>
+      )}
 
-      {branch.runs.length > 0 && <RunHistory runs={branch.runs} />}
+      {playwrightReport?.stats && (
+        <ReportStats
+          stats={playwrightReport.stats}
+          passRate={playwrightReport.passRate}
+          status={derivedStatus}
+        />
+      )}
+
+      {playwrightReport?.tests?.length ? (
+        <ReportTestsTable tests={playwrightReport.tests} />
+      ) : null}
+
+      {runHistoryData.length > 0 && <RunHistory runs={runHistoryData} />}
     </Stack>
   );
 }

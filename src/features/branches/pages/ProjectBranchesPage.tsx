@@ -73,7 +73,7 @@ export function ProjectBranchesPage() {
         }}
       >
         {project.branches.map((branch) => (
-          <BranchCard key={branch.id} branch={branch} projectId={project.id} />
+          <BranchCard key={branch.id} branch={branch} project={project} />
         ))}
       </Box>
     </Stack>

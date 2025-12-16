@@ -66,7 +66,7 @@ function normalizeBranch(
     totalScenarios: 0,
     passedScenarios: 0,
     durationMinutes: 0,
-    reportPath: buildBranchReportPath(project.id, gitlabBranch.name),
+    reportPath: buildBranchReportPath(project, gitlabBranch.name),
     runs: [],
   };
 
@@ -76,7 +76,7 @@ function normalizeBranch(
     name: gitlabBranch.name,
     updatedAt: committedAt,
     lastCommit: commitMessage,
-    reportPath: buildBranchReportPath(project.id, gitlabBranch.name),
+    reportPath: buildBranchReportPath(project, gitlabBranch.name),
   };
 }
 

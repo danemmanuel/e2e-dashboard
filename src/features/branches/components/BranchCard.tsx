@@ -2,6 +2,7 @@ import {
   Card,
   CardActions,
   CardContent,
+  Chip,
   LinearProgress,
   Stack,
   Typography,
@@ -9,28 +10,37 @@ import {
 import CommitRoundedIcon from '@mui/icons-material/CommitRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
 import type { KeyboardEvent } from 'react';
-import type { BranchInfo } from '../../projects/data/projects.ts';
+import type { BranchInfo, ProjectInfo } from '../../projects/data/projects.ts';
 import { StatusChip } from '../../../components/StatusChip.tsx';
 import {
   formatRelativeTime,
   formatCoverage,
   formatDuration,
+  formatDurationMs,
 } from '../../../utils/format.ts';
 import { useNavigate } from 'react-router-dom';
+import {
+  usePlaywrightReport,
+  deriveBranchStatusFromStats,
+} from '../../reports/hooks/usePlaywrightReport.ts';
 
 interface BranchCardProps {
-  projectId: string;
+  project: ProjectInfo;
   branch: BranchInfo;
 }
 
-export function BranchCard({ branch, projectId }: BranchCardProps) {
+export function BranchCard({ branch, project }: BranchCardProps) {
   const navigate = useNavigate();
-  const coverage = formatCoverage(
-    branch.passedScenarios,
-    branch.totalScenarios
-  );
-  const progress = branch.totalScenarios
-    ? (branch.passedScenarios / branch.totalScenarios) * 100
+  const { data: reportData, isFetching: isReportFetching } =
+    usePlaywrightReport(project, branch.id);
+  const stats = reportData?.stats;
+  const totalScenarios = stats?.total ?? branch.totalScenarios;
+  const passedScenarios = stats?.passed ?? branch.passedScenarios;
+  const failedScenarios =
+    stats?.failed ?? Math.max(0, totalScenarios - passedScenarios);
+  const coverage = formatCoverage(passedScenarios, totalScenarios);
+  const progress = totalScenarios
+    ? (passedScenarios / totalScenarios) * 100
     : 0;
   const progressColor =
     progress >= 90
@@ -38,7 +48,11 @@ export function BranchCard({ branch, projectId }: BranchCardProps) {
       : progress >= 40
       ? 'warning.dark'
       : 'error.main';
-  const branchRoute = `/projects/${projectId}/${branch.id}`;
+  const branchRoute = `/projects/${project.id}/${branch.id}`;
+  const status = stats ? deriveBranchStatusFromStats(stats) : branch.status;
+  const durationLabel = stats
+    ? formatDurationMs(stats.duration)
+    : formatDuration(branch.durationMinutes);
 
   const handleNavigate = () => navigate(branchRoute);
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -75,13 +89,28 @@ export function BranchCard({ branch, projectId }: BranchCardProps) {
             alignItems='center'
           >
             <Typography variant='h6'>{branch.name}</Typography>
+            {reportData ? (
+              <Chip
+                label='Playwright'
+                size='small'
+                color='success'
+                variant='outlined'
+              />
+            ) : isReportFetching ? (
+              <Chip
+                label='Sincronizando...'
+                size='small'
+                color='info'
+                variant='outlined'
+              />
+            ) : null}
           </Stack>
           <Stack
             direction='row'
             justifyContent='space-between'
             alignItems='center'
           >
-            <StatusChip status={branch.status} />
+            <StatusChip status={status} />
           </Stack>
           <Stack spacing={1}>
             <Typography variant='body2' color='text.secondary'>
@@ -91,13 +120,13 @@ export function BranchCard({ branch, projectId }: BranchCardProps) {
               <Stack direction='row' spacing={1} alignItems='center'>
                 <CommitRoundedIcon fontSize='small' color='action' />
                 <Typography variant='caption' color='text.secondary'>
-                  {branch.totalScenarios} cenários
+                  {totalScenarios} cenários
                 </Typography>
               </Stack>
               <Stack direction='row' spacing={1} alignItems='center'>
                 <AccessTimeRoundedIcon fontSize='small' color='action' />
                 <Typography variant='caption' color='text.secondary'>
-                  {formatDuration(branch.durationMinutes)}
+                  {durationLabel}
                 </Typography>
               </Stack>
             </Stack>
@@ -126,7 +155,8 @@ export function BranchCard({ branch, projectId }: BranchCardProps) {
       </CardContent>
       <CardActions sx={{ justifyContent: 'space-between', px: 3, pb: 3 }}>
         <Typography variant='body2' color='text.secondary'>
-          {branch.passedScenarios}/{branch.totalScenarios} cenários aprovados
+          {passedScenarios}/{totalScenarios} cenários aprovados ·{' '}
+          {failedScenarios} falharam
         </Typography>
       </CardActions>
     </Card>

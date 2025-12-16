@@ -1,0 +1,137 @@
+{
+    "config": {
+        "rootDir": "/repo",
+        "forbidOnly": false,
+        "fullyParallel": true,
+        "globalTimeout": 0,
+        "maxFailures": 0,
+        "projects": [
+            {
+                "name": "chromium",
+                "testDir": "tests",
+                "timeout": 30000
+            },
+            {
+                "name": "firefox",
+                "testDir": "tests",
+                "timeout": 30000
+            }
+        ]
+    },
+    "suites": [
+        {
+            "title": "",
+            "file": "",
+            "line": 0,
+            "column": 0,
+            "suites": [
+                {
+                    "title": "login.spec.ts",
+                    "file": "tests/login.spec.ts",
+                    "line": 1,
+                    "column": 1,
+                    "suites": [],
+                    "tests": [
+                        {
+                            "title": "should login successfully",
+                            "testId": "login-success",
+                            "line": 5,
+                            "column": 3,
+                            "retries": 0,
+                            "annotations": [],
+                            "expectedStatus": "passed",
+                            "timeout": 30000,
+                            "results": [
+                                {
+                                    "workerIndex": 0,
+                                    "status": "passed",
+                                    "duration": 1845,
+                                    "stdout": [],
+                                    "stderr": [],
+                                    "attachments": [
+                                        {
+                                            "name": "trace",
+                                            "contentType": "application/zip",
+                                            "path": "test-results/login-success/trace.zip"
+                                        }
+                                    ],
+                                    "steps": [
+                                        {
+                                            "title": "Navigate to login page",
+                                            "duration": 420,
+                                            "error": null
+                                        },
+                                        {
+                                            "title": "Fill credentials",
+                                            "duration": 610,
+                                            "error": null
+                                        },
+                                        {
+                                            "title": "Submit form",
+                                            "duration": 815,
+                                            "error": null
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "title": "should show error with invalid password",
+                            "testId": "login-invalid-password",
+                            "line": 20,
+                            "column": 3,
+                            "retries": 1,
+                            "annotations": [],
+                            "expectedStatus": "passed",
+                            "timeout": 30000,
+                            "results": [
+                                {
+                                    "workerIndex": 1,
+                                    "status": "failed",
+                                    "duration": 1320,
+                                    "stdout": [],
+                                    "stderr": [
+                                        "Error: expect(locator).toBeVisible() failed"
+                                    ],
+                                    "error": {
+                                        "message": "Expected error message to be visible",
+                                        "stack": "Error: expect(locator).toBeVisible()\n    at login.spec.ts:28:15"
+                                    },
+                                    "attachments": [
+                                        {
+                                            "name": "screenshot",
+                                            "contentType": "image/png",
+                                            "path": "test-results/login-invalid-password/screenshot.png"
+                                        }
+                                    ],
+                                    "steps": []
+                                },
+                                {
+                                    "workerIndex": 1,
+                                    "status": "passed",
+                                    "duration": 980,
+                                    "stdout": [],
+                                    "stderr": [],
+                                    "attachments": [],
+                                    "steps": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "tests": []
+        }
+    ],
+    "errors": [],
+    "stats": {
+        "total": 2,
+        "expected": 2,
+        "unexpected": 0,
+        "flaky": 0,
+        "skipped": 0,
+        "passed": 2,
+        "failed": 0,
+        "duration": 4145
+    }
+}
