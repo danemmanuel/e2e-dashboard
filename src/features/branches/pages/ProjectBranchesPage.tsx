@@ -69,7 +69,7 @@ export function ProjectBranchesPage() {
         sx={{
           display: 'grid',
           gap: 3,
-          gridTemplateColumns: { xs: '1fr', md: 'repeat(2, minmax(0, 1fr))' },
+          gridTemplateColumns: { xs: '1fr', md: 'repeat(3, minmax(0, 1fr))' },
         }}
       >
         {project.branches.map((branch) => (
