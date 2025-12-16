@@ -11,7 +11,7 @@ import { getProjectById, projects } from '../../projects/data/projects.ts';
 import { EmptyState } from '../../../components/EmptyState.tsx';
 import { BranchCard } from '../components/BranchCard.tsx';
 import { useProjectsData } from '../../projects/hooks/useProjectsData.ts';
-import { TextField, Typography } from '@mui/material';
+import { TextField } from '@mui/material';
 
 export function ProjectBranchesPage() {
   const { projectId } = useParams<{ projectId: string }>();
