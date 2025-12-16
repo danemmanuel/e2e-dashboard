@@ -11,12 +11,11 @@ import {
   getProjectById,
   projects,
 } from '../../projects/data/projects.ts';
-import { ReportViewer } from '../components/ReportViewer.tsx';
 import { RunHistory } from '../components/RunHistory.tsx';
 import { EmptyState } from '../../../components/EmptyState.tsx';
 import { useProjectsData } from '../../projects/hooks/useProjectsData.ts';
 import { ReportStats } from '../components/ReportStats.tsx';
-import { ReportTestsTable } from '../components/ReportTestsTable.tsx';
+import { ReportDetails } from '../components/ReportDetails.tsx';
 import {
   usePlaywrightReport,
   deriveBranchStatusFromStats,
@@ -98,16 +97,25 @@ export function BranchReportPage() {
           { label: branch.name },
         ]}
         actions={
-          <Button
-            startIcon={<ArrowBackRoundedIcon />}
-            onClick={() => navigate(-1)}
-          >
-            Voltar
-          </Button>
+          <Stack direction='row' spacing={1}>
+            <Button
+              startIcon={<ArrowBackRoundedIcon />}
+              onClick={() => navigate(-1)}
+            >
+              Voltar
+            </Button>
+            <Button
+              variant='outlined'
+              component='a'
+              href={reportSrc}
+              target='_blank'
+              rel='noreferrer'
+            >
+              Abrir HTML do Playwright
+            </Button>
+          </Stack>
         }
       />
-
-      <ReportViewer src={reportSrc} />
 
       {isProjectsFetching && <LinearProgress sx={{ width: '100%' }} />}
       {isReportFetching && <LinearProgress sx={{ width: '100%' }} />}
@@ -132,11 +140,14 @@ export function BranchReportPage() {
         />
       )}
 
-      {playwrightReport?.tests?.length ? (
-        <ReportTestsTable tests={playwrightReport.tests} />
+      {playwrightReport?.specs?.length ? (
+        <ReportDetails
+          specs={playwrightReport.specs}
+          tests={playwrightReport.tests}
+        />
       ) : null}
 
-      {runHistoryData.length > 0 && <RunHistory runs={runHistoryData} />}
+      {/* {runHistoryData.length > 0 && <RunHistory runs={runHistoryData} />} */}
     </Stack>
   );
 }

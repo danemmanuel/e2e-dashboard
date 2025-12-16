@@ -32,7 +32,7 @@ export function ReportStats({ stats, passRate, status }: ReportStatsProps) {
             justifyContent='space-between'
             alignItems='center'
           >
-            <Typography variant='h6'>Resumo do ultimo run</Typography>
+            <Typography variant='h6'>Dados do Último Report</Typography>
             <StatusChip status={status} />
           </Stack>
           <Box

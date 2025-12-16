@@ -25,6 +25,9 @@ interface PlaywrightRawStats {
 
 interface PlaywrightSuite {
   title?: string;
+  file?: string;
+  line?: number;
+  column?: number;
   suites?: PlaywrightSuite[];
   specs?: PlaywrightSpec[];
 }
@@ -32,10 +35,19 @@ interface PlaywrightSuite {
 interface PlaywrightSpec {
   title?: string;
   id?: string;
+  file?: string;
+  line?: number;
+  column?: number;
+  ok?: boolean;
+  tags?: string[];
   tests?: PlaywrightSpecTest[];
 }
 
 interface PlaywrightSpecTest {
+  title?: string;
+  timeout?: number;
+  annotations?: unknown[];
+  expectedStatus?: string;
   projectId?: string;
   projectName?: string;
   results?: PlaywrightTestAttempt[];
@@ -44,9 +56,31 @@ interface PlaywrightSpecTest {
 interface PlaywrightTestAttempt {
   status: PlaywrightAttemptStatus;
   duration?: number;
-  error?: { message?: string } | null;
-  errors?: { message?: string }[];
-  stderr?: string[];
+  error?: PlaywrightErrorEntry | null;
+  errors?: PlaywrightErrorEntry[];
+  stderr?: PlaywrightStdEntry[];
+  stdout?: PlaywrightStdEntry[];
+  attachments?: PlaywrightAttachmentEntry[];
+  workerIndex?: number;
+  parallelIndex?: number;
+  retry?: number;
+  startTime?: string;
+}
+
+interface PlaywrightStdEntry {
+  text?: string;
+}
+
+interface PlaywrightAttachmentEntry {
+  name?: string;
+  contentType?: string;
+  path?: string;
+}
+
+interface PlaywrightErrorEntry {
+  message?: string;
+  value?: string;
+  stack?: string;
 }
 
 type PlaywrightAttemptStatus =
@@ -77,58 +111,192 @@ export interface PlaywrightReportTest {
   durationMs: number;
   retries: number;
   errorMessage?: string;
+  specId: string;
+  specTitle?: string;
+  specFile?: string;
+  specLine?: number;
+  specColumn?: number;
+  path: string[];
+  projectName?: string;
+  projectId?: string;
+  attempts: PlaywrightTestAttemptDetail[];
 }
 
 export interface PlaywrightReportSummary {
   stats: PlaywrightReportStats;
   tests: PlaywrightReportTest[];
   passRate: number;
+  specs: PlaywrightReportSpec[];
 }
 
-function collectTests(
+export interface PlaywrightReportSpec {
+  id: string;
+  title: string;
+  file?: string;
+  line?: number;
+  column?: number;
+  path: string[];
+  tests: PlaywrightReportTest[];
+}
+
+export interface PlaywrightTestAttemptDetail {
+  status: PlaywrightAttemptStatus;
+  durationMs: number;
+  stdout: string[];
+  stderr: string[];
+  attachments: PlaywrightAttachment[];
+  errors: PlaywrightErrorDetail[];
+  workerIndex?: number;
+  parallelIndex?: number;
+  startTime?: string;
+}
+
+export interface PlaywrightAttachment {
+  name: string;
+  path?: string;
+  contentType?: string;
+}
+
+export interface PlaywrightErrorDetail {
+  message?: string;
+  stack?: string;
+}
+
+function collectSpecs(
   suites: PlaywrightSuite[] = [],
   parents: string[] = []
-): PlaywrightReportTest[] {
-  const tests: PlaywrightReportTest[] = [];
+): PlaywrightReportSpec[] {
+  const specs: PlaywrightReportSpec[] = [];
 
   suites.forEach((suite) => {
     const suitePath = suite.title ? [...parents, suite.title] : parents;
-    suite.specs?.forEach((spec) => {
-      const specPath = spec.title ? [...suitePath, spec.title] : suitePath;
 
-      spec.tests?.forEach((specTest, index) => {
-        const attempts = specTest.results ?? [];
-        const status = deriveTestStatus(attempts);
-        const durationMs = attempts.reduce(
-          (acc, attempt) => acc + (attempt.duration ?? 0),
-          0
-        );
-        const errorMessage = extractErrorMessage(attempts);
-        const projectLabel = specTest.projectName ?? specTest.projectId;
-        const testTitle = projectLabel
-          ? `${spec.title ?? 'Sem titulo'} [${projectLabel}]`
-          : spec.title ?? 'Sem titulo';
-        const idCandidates = [spec.id, projectLabel];
-        const fallbackId = [...specPath, String(index)].join(' / ');
-
-        tests.push({
-          id: idCandidates.filter(Boolean).join('-') || fallbackId,
-          title: testTitle,
-          fullTitle: [...suitePath, testTitle].filter(Boolean).join(' / '),
-          status,
-          durationMs,
-          retries: Math.max(0, attempts.length - 1),
-          errorMessage,
-        });
-      });
+    suite.specs?.forEach((spec, specIndex) => {
+      specs.push(buildSpec(spec, suitePath, specIndex));
     });
 
     if (suite.suites?.length) {
-      tests.push(...collectTests(suite.suites, suitePath));
+      specs.push(...collectSpecs(suite.suites, suitePath));
     }
   });
 
-  return tests;
+  return specs;
+}
+
+function buildSpec(
+  spec: PlaywrightSpec,
+  suitePath: string[],
+  specIndex: number
+): PlaywrightReportSpec {
+  const specPath = suitePath.length ? suitePath : spec.file ? [spec.file] : [];
+  const specId = spec.id || [...specPath, String(specIndex)].join(' / ');
+  const tests = (spec.tests ?? []).map((specTest, testIndex) =>
+    buildTestFromSpec(spec, specTest, specPath, specId, specIndex, testIndex)
+  );
+
+  return {
+    id: specId,
+    title: spec.title ?? spec.file ?? 'Spec sem nome',
+    file: spec.file,
+    line: spec.line,
+    column: spec.column,
+    path: specPath,
+    tests,
+  };
+}
+
+function buildTestFromSpec(
+  spec: PlaywrightSpec,
+  specTest: PlaywrightSpecTest,
+  parentPath: string[],
+  specId: string,
+  specIndex: number,
+  testIndex: number
+): PlaywrightReportTest {
+  const attempts = specTest.results ?? [];
+  const status = deriveTestStatus(attempts);
+  const durationMs = attempts.reduce(
+    (acc, attempt) => acc + (attempt.duration ?? 0),
+    0
+  );
+  const errorMessage = extractErrorMessage(attempts);
+  const fallbackId = `${specId}#${testIndex}`;
+  const attemptDetails = attempts.map((attempt) => buildAttemptDetail(attempt));
+  const scenarioTitle = spec.title ?? spec.file ?? `Cenário ${specIndex + 1}`;
+  const testTitle = specTest.title?.trim() || scenarioTitle;
+  const contextPath = parentPath.length
+    ? parentPath
+    : spec.file
+    ? [spec.file]
+    : [];
+  const fullTitleParts = [...contextPath, scenarioTitle];
+
+  if (specTest.projectName) {
+    fullTitleParts.push(`Projeto ${specTest.projectName}`);
+  }
+
+  return {
+    id:
+      [specTest.projectId, specTest.projectName, specId, testIndex]
+        .filter(Boolean)
+        .join('-') || fallbackId,
+    title: testTitle,
+    fullTitle: fullTitleParts.join(' / '),
+    status,
+    durationMs,
+    retries: Math.max(0, attempts.length - 1),
+    errorMessage,
+    specId,
+    specTitle: spec.title,
+    specFile: spec.file,
+    specLine: spec.line,
+    specColumn: spec.column,
+    path: contextPath,
+    projectName: specTest.projectName,
+    projectId: specTest.projectId,
+    attempts: attemptDetails,
+  };
+}
+
+function buildAttemptDetail(
+  attempt: PlaywrightTestAttempt
+): PlaywrightTestAttemptDetail {
+  return {
+    status: attempt.status,
+    durationMs: attempt.duration ?? 0,
+    stdout: normalizeLogEntries(attempt.stdout),
+    stderr: normalizeLogEntries(attempt.stderr),
+    attachments: (attempt.attachments ?? []).map((attachment, index) => ({
+      name: attachment.name || `Anexo ${index + 1}`,
+      path: attachment.path,
+      contentType: attachment.contentType,
+    })),
+    errors: normalizeErrors(attempt),
+    workerIndex: attempt.workerIndex,
+    parallelIndex: attempt.parallelIndex,
+    startTime: attempt.startTime,
+  };
+}
+
+function normalizeLogEntries(entries?: PlaywrightStdEntry[]) {
+  return (entries ?? [])
+    .map((entry) => entry.text?.trim())
+    .filter((text): text is string => Boolean(text && text.length));
+}
+
+function normalizeErrors(
+  attempt: PlaywrightTestAttempt
+): PlaywrightErrorDetail[] {
+  const mainError = attempt.error ? [attempt.error] : [];
+  const otherErrors = attempt.errors ?? [];
+  const merged = [...mainError, ...otherErrors];
+
+  return merged
+    .map((error) => ({
+      message: error.message ?? error.value,
+      stack: error.stack,
+    }))
+    .filter((error) => Boolean(error.message || error.stack));
 }
 
 function extractErrorMessage(attempts: PlaywrightTestAttempt[]) {
@@ -231,7 +399,8 @@ async function fetchPlaywrightReport(
   }
 
   const payload = (await response.json()) as PlaywrightReportJson;
-  const tests = collectTests(payload.suites);
+  const specs = collectSpecs(payload.suites);
+  const tests = specs.flatMap((spec) => spec.tests);
 
   if (!tests.length) {
     return null;
@@ -242,6 +411,7 @@ async function fetchPlaywrightReport(
   return {
     stats,
     tests,
+    specs,
     passRate: computePassRate(stats),
   };
 }
