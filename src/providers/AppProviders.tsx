@@ -41,7 +41,7 @@ export function useThemeMode() {
 }
 
 export function AppProviders({ children }: PropsWithChildren) {
-  const [mode, setMode] = useState<PaletteMode>('light');
+  const [mode, setMode] = useState<PaletteMode>('dark');
   const theme = useMemo(() => createAppTheme(mode), [mode]);
   const toggleMode = useCallback(
     () => setMode((prev) => (prev === 'light' ? 'dark' : 'light')),
