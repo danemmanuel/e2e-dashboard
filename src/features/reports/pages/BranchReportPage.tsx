@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import LinearProgress from '@mui/material/LinearProgress';
 import Stack from '@mui/material/Stack';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
+import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components/PageHeader.tsx';
 import {
@@ -80,6 +81,11 @@ export function BranchReportPage() {
   const derivedStatus = playwrightReport?.stats
     ? deriveBranchStatusFromStats(playwrightReport.stats)
     : branch.status;
+  const jiraMatch = branch.name.match(/TELERISCO-\d+/i);
+  const jiraKey = jiraMatch ? jiraMatch[0].toUpperCase() : null;
+  const jiraUrl = jiraKey
+    ? `https://telerisco.atlassian.net/browse/${jiraKey}`
+    : null;
 
   const shouldShowMissingReportInfo =
     !reportError && !isReportFetching && playwrightReport === null;
@@ -102,6 +108,18 @@ export function BranchReportPage() {
             >
               Voltar
             </Button>
+            {jiraUrl ? (
+              <Button
+                variant='outlined'
+                component='a'
+                href={jiraUrl}
+                target='_blank'
+                rel='noreferrer'
+                endIcon={<LaunchRoundedIcon fontSize='small' />}
+              >
+                Abrir Jira
+              </Button>
+            ) : null}
             <Button
               variant='outlined'
               component='a'

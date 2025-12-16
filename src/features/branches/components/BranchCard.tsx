@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,6 +10,7 @@ import {
 } from '@mui/material';
 import CommitRoundedIcon from '@mui/icons-material/CommitRounded';
 import AccessTimeRoundedIcon from '@mui/icons-material/AccessTimeRounded';
+import LaunchRoundedIcon from '@mui/icons-material/LaunchRounded';
 import type { KeyboardEvent } from 'react';
 import type { BranchInfo, ProjectInfo } from '../../projects/data/projects.ts';
 import { StatusChip } from '../../../components/StatusChip.tsx';
@@ -33,6 +35,11 @@ export function BranchCard({ branch, project }: BranchCardProps) {
   const navigate = useNavigate();
   const { data: reportData, isFetching: isReportFetching } =
     usePlaywrightReport(project, branch.id);
+  const jiraMatch = branch.name.match(/TELERISCO-\d+/i);
+  const jiraKey = jiraMatch ? jiraMatch[0].toUpperCase() : null;
+  const jiraUrl = jiraKey
+    ? `https://telerisco.atlassian.net/browse/${jiraKey}`
+    : null;
   const stats = reportData?.stats;
   const totalScenarios = stats?.total ?? branch.totalScenarios;
   const passedScenarios = stats?.passed ?? branch.passedScenarios;
@@ -153,6 +160,20 @@ export function BranchCard({ branch, project }: BranchCardProps) {
           {passedScenarios}/{totalScenarios} cenários aprovados ·{' '}
           {failedScenarios} falharam
         </Typography>
+        {jiraUrl ? (
+          <Button
+            component='a'
+            href={jiraUrl}
+            target='_blank'
+            rel='noreferrer'
+            size='small'
+            variant='outlined'
+            onClick={(event) => event.stopPropagation()}
+            endIcon={<LaunchRoundedIcon fontSize='small' />}
+          >
+            Abrir Jira
+          </Button>
+        ) : null}
       </CardActions>
     </Card>
   );
