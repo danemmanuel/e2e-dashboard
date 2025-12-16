@@ -79,7 +79,8 @@ export function BranchCard({ branch, project }: BranchCardProps) {
         cursor: 'pointer',
         '&:hover': {
           boxShadow: '0px 12px 30px rgba(15, 23, 42, 0.12)',
-          transform: 'translateY(-2px)',
+          transform: 'translateY(-1px)',
+          borderColor: 'primary.main',
         },
       }}
       onClick={handleNavigate}
