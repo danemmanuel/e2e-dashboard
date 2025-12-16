@@ -6,6 +6,7 @@ import {
   AccordionSummary,
   Alert,
   Box,
+  Button,
   Card,
   CardContent,
   Chip,
@@ -18,7 +19,6 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
-  Tooltip,
   Typography,
 } from '@mui/material';
 import type {
@@ -31,6 +31,8 @@ import { formatDurationMs } from '../../../utils/format.ts';
 interface ReportDetailsProps {
   specs: PlaywrightReportSpec[];
   tests: PlaywrightReportTest[];
+  attachmentsBasePath?: string;
+  reportSrc: string;
 }
 
 type TestStatusFilter = PlaywrightTestStatus | 'all';
@@ -69,7 +71,12 @@ type SpecGroup = {
   specs: SpecWithFilteredTests[];
 };
 
-export function ReportDetails({ specs, tests }: ReportDetailsProps) {
+export function ReportDetails({
+  specs,
+  tests,
+  reportSrc,
+  attachmentsBasePath,
+}: ReportDetailsProps) {
   const [statusFilter, setStatusFilter] = useState<TestStatusFilter>('all');
   const [query, setQuery] = useState('');
   const [selectedTestId, setSelectedTestId] = useState<string | null>(null);
@@ -393,6 +400,8 @@ export function ReportDetails({ specs, tests }: ReportDetailsProps) {
                           <AttemptErrors errors={attempt.errors} />
                           <AttemptAttachments
                             attachments={attempt.attachments}
+                            attachmentsBasePath={attachmentsBasePath}
+                            reportSrc={reportSrc}
                           />
                         </Stack>
                       </AccordionDetails>
@@ -505,9 +514,28 @@ function AttemptErrors({
 
 function AttemptAttachments({
   attachments,
+  attachmentsBasePath,
+  reportSrc,
 }: {
   attachments: PlaywrightReportTest['attempts'][number]['attachments'];
+  attachmentsBasePath?: string;
+  reportSrc: string;
 }) {
+  const buildAttachmentUrl = (rawPath?: string) => {
+    if (!attachmentsBasePath || !rawPath) {
+      return undefined;
+    }
+
+    const segments = rawPath.split('/').filter(Boolean);
+    const fileName = segments[segments.length - 1];
+
+    if (!fileName) {
+      return undefined;
+    }
+
+    return `${attachmentsBasePath}/${fileName}`;
+  };
+
   return (
     <Box>
       <Typography variant='subtitle2' gutterBottom>
@@ -515,23 +543,38 @@ function AttemptAttachments({
       </Typography>
       {attachments.length ? (
         <Stack spacing={1}>
-          {attachments.map((attachment, index) => (
-            <Tooltip
-              key={`${attachment.name}-${index}`}
-              title={
-                attachment.path
-                  ? attachment.path
-                  : 'Abra o report HTML original do Playwright para baixar este anexo.'
-              }
-            >
-              <Chip
-                label={attachment.name}
-                variant='outlined'
-                color='default'
-                sx={{ width: 'fit-content' }}
-              />
-            </Tooltip>
-          ))}
+          {attachments.map((attachment, index) => {
+            const label = attachment.name || `Anexo ${index + 1}`;
+            const attachmentUrl = buildAttachmentUrl(attachment.path);
+
+            const isVideo =
+              attachment.contentType?.startsWith('video/') ||
+              label.toLowerCase().includes('video');
+            const buttonVariant = isVideo ? 'contained' : 'outlined';
+
+            return (
+              <Stack
+                direction='row'
+                spacing={1}
+                alignItems='center'
+                flexWrap='wrap'
+                key={`${label}-${index}`}
+              >
+                {attachmentUrl ? (
+                  <Button
+                    component='a'
+                    href={reportSrc}
+                    target='_blank'
+                    rel='noreferrer'
+                    size='small'
+                    variant={buttonVariant}
+                  >
+                    Acesse o Playwright para ter acesso ao vídeo
+                  </Button>
+                ) : null}
+              </Stack>
+            );
+          })}
         </Stack>
       ) : (
         <Typography variant='body2' color='text.secondary'>

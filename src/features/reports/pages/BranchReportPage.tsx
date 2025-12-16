@@ -7,11 +7,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { PageHeader } from '../../../components/PageHeader.tsx';
 import {
   buildBranchReportPath,
+  buildBranchReportDataPath,
   getBranch,
   getProjectById,
   projects,
 } from '../../projects/data/projects.ts';
-import { RunHistory } from '../components/RunHistory.tsx';
 import { EmptyState } from '../../../components/EmptyState.tsx';
 import { useProjectsData } from '../../projects/hooks/useProjectsData.ts';
 import { ReportStats } from '../components/ReportStats.tsx';
@@ -19,7 +19,6 @@ import { ReportDetails } from '../components/ReportDetails.tsx';
 import {
   usePlaywrightReport,
   deriveBranchStatusFromStats,
-  buildRunFromStats,
 } from '../hooks/usePlaywrightReport.ts';
 
 export function BranchReportPage() {
@@ -73,6 +72,7 @@ export function BranchReportPage() {
   }
 
   const computedReportPath = buildBranchReportPath(project, branch.id);
+  const reportDataBasePath = buildBranchReportDataPath(project, branch.id);
   const reportSrc =
     branch.reportPath && !branch.reportPath.startsWith('/reports/')
       ? branch.reportPath
@@ -80,9 +80,7 @@ export function BranchReportPage() {
   const derivedStatus = playwrightReport?.stats
     ? deriveBranchStatusFromStats(playwrightReport.stats)
     : branch.status;
-  const runHistoryData = playwrightReport?.stats
-    ? [buildRunFromStats(playwrightReport.stats, branch)]
-    : branch.runs;
+
   const shouldShowMissingReportInfo =
     !reportError && !isReportFetching && playwrightReport === null;
 
@@ -142,8 +140,10 @@ export function BranchReportPage() {
 
       {playwrightReport?.specs?.length ? (
         <ReportDetails
+          reportSrc={reportSrc}
           specs={playwrightReport.specs}
           tests={playwrightReport.tests}
+          attachmentsBasePath={reportDataBasePath}
         />
       ) : null}
 

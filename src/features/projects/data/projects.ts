@@ -68,6 +68,13 @@ export function buildBranchReportJsonPath(
   return `${buildBranchReportBase(project, branchId)}/report.json`;
 }
 
+export function buildBranchReportDataPath(
+  project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
+  branchId: string
+) {
+  return `${buildBranchReportBase(project, branchId)}/data`;
+}
+
 export const projects: ProjectInfo[] = [
   {
     id: 'telerisco-front',
