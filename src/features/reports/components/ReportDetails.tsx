@@ -61,13 +61,19 @@ const ATTEMPT_META: Record<AttemptStatus, StatusMeta> = {
 
 const ANSI_REGEX = /\u001B\[[0-9;]*m/g;
 
-function buildPlaywrightTestUrl(baseUrl: string, testId?: string) {
-  if (!testId) {
+function buildPlaywrightTestUrl(
+  baseUrl: string,
+  test?: PlaywrightReportTest | null
+) {
+  if (!test) {
     return baseUrl;
   }
 
   const [withoutHash] = baseUrl.split('#');
-  const normalizedId = testId.replace(/^.+?(508f5f)/, '$1');
+  const rawParts = test.id.split('-');
+  const projectIdParts = [test.projectId, test.projectName].filter(Boolean);
+  const trimmedParts = rawParts.slice(projectIdParts.length);
+  const normalizedId = trimmedParts.length ? trimmedParts.join('-') : test.id;
   const encoded = encodeURIComponent(normalizedId);
 
   return `${withoutHash}#?testId=${encoded}`;
@@ -171,7 +177,7 @@ export function ReportDetails({
     [tests, selectedTestId]
   );
   const selectedTestPlaywrightUrl = useMemo(
-    () => buildPlaywrightTestUrl(reportSrc, selectedTest?.id),
+    () => buildPlaywrightTestUrl(reportSrc, selectedTest),
     [reportSrc, selectedTest]
   );
 
@@ -429,7 +435,7 @@ export function ReportDetails({
                             attachments={attempt.attachments}
                             attachmentsBasePath={attachmentsBasePath}
                             reportSrc={reportSrc}
-                            testId={selectedTest.id}
+                            test={selectedTest}
                           />
                         </Stack>
                       </AccordionDetails>
@@ -544,12 +550,12 @@ function AttemptAttachments({
   attachments,
   attachmentsBasePath,
   reportSrc,
-  testId,
+  test,
 }: {
   attachments: PlaywrightReportTest['attempts'][number]['attachments'];
   attachmentsBasePath?: string;
   reportSrc: string;
-  testId?: string;
+  test?: PlaywrightReportTest;
 }) {
   const buildAttachmentUrl = (rawPath?: string) => {
     if (!attachmentsBasePath || !rawPath) {
@@ -565,7 +571,7 @@ function AttemptAttachments({
 
     return `${attachmentsBasePath}/${fileName}`;
   };
-  const playwrightTestUrl = buildPlaywrightTestUrl(reportSrc, testId);
+  const playwrightTestUrl = buildPlaywrightTestUrl(reportSrc, test);
 
   return (
     <Box>
