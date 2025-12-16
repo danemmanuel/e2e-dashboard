@@ -90,12 +90,7 @@ export function BranchCard({ branch, project }: BranchCardProps) {
           >
             <Typography variant='h6'>{branch.name}</Typography>
             {reportData ? (
-              <Chip
-                label='Playwright'
-                size='small'
-                color='success'
-                variant='outlined'
-              />
+              <></>
             ) : isReportFetching ? (
               <Chip
                 label='Sincronizando...'
