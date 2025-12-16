@@ -1,137 +1,1579 @@
 {
-    "config": {
-        "rootDir": "/repo",
-        "forbidOnly": false,
-        "fullyParallel": true,
-        "globalTimeout": 0,
-        "maxFailures": 0,
-        "projects": [
-            {
-                "name": "chromium",
-                "testDir": "tests",
-                "timeout": 30000
-            },
-            {
-                "name": "firefox",
-                "testDir": "tests",
-                "timeout": 30000
-            }
-        ]
+  "config": {
+    "configFile": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/playwright.config.js",
+    "rootDir": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 2
     },
-    "suites": [
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
         {
-            "title": "",
-            "file": "",
-            "line": 0,
-            "column": 0,
-            "suites": [
+          "open": "never"
+        }
+      ],
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 2
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 500000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "3way",
+    "version": "1.56.1",
+    "workers": 2,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "fluxo-novas-pesquisas.spec.js",
+      "file": "fluxo-novas-pesquisas.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Deve realizar os 5 fluxos possíveis de pesquisa sem erros, os fluxos são: Autonomo, Agregado, Frota Própria Outras funções e Terceiro",
+          "file": "fluxo-novas-pesquisas.spec.js",
+          "line": 5,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Deve realizar uma pesquisa do tipo autonomo de forma completa, sem erros",
+              "ok": true,
+              "tags": [],
+              "tests": [
                 {
-                    "title": "login.spec.ts",
-                    "file": "tests/login.spec.ts",
-                    "line": 1,
-                    "column": 1,
-                    "suites": [],
-                    "tests": [
+                  "timeout": 500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 96124,
+                      "errors": [],
+                      "stdout": [
                         {
-                            "title": "should login successfully",
-                            "testId": "login-success",
-                            "line": 5,
-                            "column": 3,
-                            "retries": 0,
-                            "annotations": [],
-                            "expectedStatus": "passed",
-                            "timeout": 30000,
-                            "results": [
-                                {
-                                    "workerIndex": 0,
-                                    "status": "passed",
-                                    "duration": 1845,
-                                    "stdout": [],
-                                    "stderr": [],
-                                    "attachments": [
-                                        {
-                                            "name": "trace",
-                                            "contentType": "application/zip",
-                                            "path": "test-results/login-success/trace.zip"
-                                        }
-                                    ],
-                                    "steps": [
-                                        {
-                                            "title": "Navigate to login page",
-                                            "duration": 420,
-                                            "error": null
-                                        },
-                                        {
-                                            "title": "Fill credentials",
-                                            "duration": 610,
-                                            "error": null
-                                        },
-                                        {
-                                            "title": "Submit form",
-                                            "duration": 815,
-                                            "error": null
-                                        }
-                                    ]
-                                }
-                            ]
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo usuário com o valor 'henrique.clementino' { label: \u001b[32m'usuário'\u001b[39m, value: \u001b[32m'henrique.clementino'\u001b[39m }\n"
                         },
                         {
-                            "title": "should show error with invalid password",
-                            "testId": "login-invalid-password",
-                            "line": 20,
-                            "column": 3,
-                            "retries": 1,
-                            "annotations": [],
-                            "expectedStatus": "passed",
-                            "timeout": 30000,
-                            "results": [
-                                {
-                                    "workerIndex": 1,
-                                    "status": "failed",
-                                    "duration": 1320,
-                                    "stdout": [],
-                                    "stderr": [
-                                        "Error: expect(locator).toBeVisible() failed"
-                                    ],
-                                    "error": {
-                                        "message": "Expected error message to be visible",
-                                        "stack": "Error: expect(locator).toBeVisible()\n    at login.spec.ts:28:15"
-                                    },
-                                    "attachments": [
-                                        {
-                                            "name": "screenshot",
-                                            "contentType": "image/png",
-                                            "path": "test-results/login-invalid-password/screenshot.png"
-                                        }
-                                    ],
-                                    "steps": []
-                                },
-                                {
-                                    "workerIndex": 1,
-                                    "status": "passed",
-                                    "duration": 980,
-                                    "stdout": [],
-                                    "stderr": [],
-                                    "attachments": [],
-                                    "steps": []
-                                }
-                            ]
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo senha com o valor 'Pamcary@2025' { label: \u001b[32m'Senha'\u001b[39m, value: \u001b[32m'Pamcary@2025'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'Entrar' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Entrar' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Entrar\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.' está no resultado da página { text: \u001b[32m'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no combobox com o nome de 'Tipo Vínculo' { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('combobox', { name: 'Tipo Vínculo' }).first() { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=combobox, name=Tipo Vínculo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'Autônomo' do dropdown { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Autônomo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'Autônomo' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Autônomo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=Autônomo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre um botão chamado 'Iniciar Nova Pesquisa' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Iniciar Nova Pesquisa' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Iniciar Nova Pesquisa\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Autônomo para a filial SAO PAULO/SP. Insira o CPF do Motorista.' está na página {\n  text: \u001b[32m'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Autônomo para a filial SAO PAULO/SP. Insira o CPF do Motorista.'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Autônomo para a filial SAO PAULO/SP. Insira o CPF do Motorista.\"\n"
+                        },
+                        {
+                          "text": "Generated CPF: 435.577.748-05\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o CPF' com o valor 435.577.748-05 { label: \u001b[32m'Insira o CPF'\u001b[39m, value: \u001b[32m'435.577.748-05'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar cpf' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'OK. Agora informe o número do Celular do motorista' está na página { text: \u001b[32m'OK. Agora informe o número do Celular do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"OK. Agora informe o número do Celular do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o número de celular' com o valor '11961983333' { label: \u001b[32m'Insira o número de celular'\u001b[39m, value: \u001b[32m'11961983333'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar celular' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Motorista possui CNH emitida em território nacional?' está na página { text: \u001b[32m'Motorista possui CNH emitida em território nacional?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Motorista possui CNH emitida em território nacional?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'SIM' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Envie agora a imagem da Frente da CNH do motorista' está na página { text: \u001b[32m'Envie agora a imagem da Frente da CNH do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Envie agora a imagem da Frente da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_loading_not_visible based on Verifique que nenhum loading esteja mais visível na tela {}\n"
+                        },
+                        {
+                          "text": "✅ No loading indicator is visible.\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_alert_text based on verifique o alerta 'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?' {\n  text: \u001b[32m'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Alert text found: \"O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista' está na página {\n  text: \u001b[32m'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Formulário de Endereço' está na página { text: \u001b[32m'Formulário de Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Formulário de Endereço\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'CEP' com o valor '05128010' { label: \u001b[32m'CEP'\u001b[39m, value: \u001b[32m'05128010'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o O input 'logradouro' está preenchido com o valor 'RUA MONSENHOR CASTRO NERY' { text: \u001b[32m'RUA MONSENHOR CASTRO NERY'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "❌ Text NOT found: \"RUA MONSENHOR CASTRO NERY\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Número' com o valor '33' { label: \u001b[32m'Número'\u001b[39m, value: \u001b[32m'33'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'ENVIAR DADOS DO ENDEREÇO' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Dados do Endereço' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Dados do Endereço\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Já trabalhou ou trabalha na sua empresa?' está na página { text: \u001b[32m'Já trabalhou ou trabalha na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Já trabalhou ou trabalha na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Data aproximada da primeira viagem feita pelo motorista na sua empresa' está na página {\n  text: \u001b[32m'Data aproximada da primeira viagem feita pelo motorista na sua empresa'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Data aproximada da primeira viagem feita pelo motorista na sua empresa\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Abra o calendário { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Escolha uma data'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Escolha uma data' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Escolha uma data'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Escolha uma data\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo de data com o valor '03/2022' { label: \u001b[32m'Data'\u001b[39m, value: \u001b[32m'03/2022'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Carrega até o momento na sua empresa?' está na página { text: \u001b[32m'Carrega até o momento na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Carrega até o momento na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Não' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'NÃO'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=NÃO\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Data da última viagem' se encontra na página { text: \u001b[32m'Data da última viagem'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Data da última viagem\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Abra o calendário { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Escolha uma data'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Escolha uma data' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Escolha uma data'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Escolha uma data\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo de data com o valor '08/2024' { label: \u001b[32m'Data'\u001b[39m, value: \u001b[32m'08/2024'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Perfeito! Agora informe o tipo de Veiculo:' está na página { text: \u001b[32m'Perfeito! Agora informe o tipo de Veiculo:'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Perfeito! Agora informe o tipo de Veiculo:\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o valor 'Utilitário, Truck ou Moto' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'UTILITÁRIO, TRUCK OU MOTO'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'UTILITÁRIO, TRUCK OU MOTO' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'UTILITÁRIO, TRUCK OU MOTO'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=UTILITÁRIO, TRUCK OU MOTO\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Agora precisamos da imagem do CRLV do primeiro veículo' está na página { text: \u001b[32m'Agora precisamos da imagem do CRLV do primeiro veículo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Agora precisamos da imagem do CRLV do primeiro veículo\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/MJR-1H33 - CAVALO.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/MJR-1H33 - CAVALO.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Pesquisa enviada com sucesso!' está na página { text: \u001b[32m'Pesquisa enviada com sucesso!'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Pesquisa enviada com sucesso!\"\n"
                         }
-                    ]
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-16T14:51:48.066Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results/fluxo-novas-pesquisas-Deve-b0697-de-forma-completa-sem-erros-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
                 }
-            ],
-            "tests": []
+              ],
+              "id": "508f5f799e6b3f1da714-056da3a12d744d612690",
+              "file": "fluxo-novas-pesquisas.spec.js",
+              "line": 6,
+              "column": 3
+            },
+            {
+              "title": "Deve realizar uma pesquisa do tipo agregado de forma completa, sem erros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 63347,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo usuário com o valor 'henrique.clementino' { label: \u001b[32m'usuário'\u001b[39m, value: \u001b[32m'henrique.clementino'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo senha com o valor 'Pamcary@2025' { label: \u001b[32m'Senha'\u001b[39m, value: \u001b[32m'Pamcary@2025'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'Entrar' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Entrar' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Entrar\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.' está no resultado da página { text: \u001b[32m'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no combobox com o nome de 'Tipo Vínculo' { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('combobox', { name: 'Tipo Vínculo' }).first() { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=combobox, name=Tipo Vínculo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'Agregado' do dropdown { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Agregado'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'Agregado' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Agregado'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=Agregado\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre um botão chamado 'Iniciar Nova Pesquisa' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Iniciar Nova Pesquisa' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Iniciar Nova Pesquisa\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Agregado para a filial SAO PAULO/SP. Insira o CPF do Motorista.' está na página {\n  text: \u001b[32m'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Agregado para a filial SAO PAULO/SP. Insira o CPF do Motorista.'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Agregado para a filial SAO PAULO/SP. Insira o CPF do Motorista.\"\n"
+                        },
+                        {
+                          "text": "Generated CPF: 845.536.028-30\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o CPF' com o valor 845.536.028-30 { label: \u001b[32m'Insira o CPF'\u001b[39m, value: \u001b[32m'845.536.028-30'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar cpf' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'OK. Agora informe o número do Celular do motorista' está na página { text: \u001b[32m'OK. Agora informe o número do Celular do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"OK. Agora informe o número do Celular do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o número de celular' com o valor '11961983333' { label: \u001b[32m'Insira o número de celular'\u001b[39m, value: \u001b[32m'11961983333'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar celular' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Motorista possui CNH emitida em território nacional?' está na página { text: \u001b[32m'Motorista possui CNH emitida em território nacional?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Motorista possui CNH emitida em território nacional?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'SIM' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Envie agora a imagem da Frente da CNH do motorista' está na página { text: \u001b[32m'Envie agora a imagem da Frente da CNH do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Envie agora a imagem da Frente da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_loading_not_visible based on Verifique que nenhum loading esteja mais visível na tela {}\n"
+                        },
+                        {
+                          "text": "✅ No loading indicator is visible.\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_alert_text based on verifique o alerta 'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?' {\n  text: \u001b[32m'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Alert text found: \"O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista' está na página {\n  text: \u001b[32m'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ok. Agora, preencha os dados do endereço residencial do motorista' está na página {\n  text: \u001b[32m'Ok. Agora, preencha os dados do endereço residencial do motorista'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ok. Agora, preencha os dados do endereço residencial do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'CEP' com o valor '05128010' { label: \u001b[32m'CEP'\u001b[39m, value: \u001b[32m'05128010'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: verify_input_value based on Verifique se o O input 'logradouro' está preenchido com o valor 'RUA MONSENHOR CASTRO NERY' { label: \u001b[32m'logradouro'\u001b[39m, expectedValue: \u001b[32m'RUA MONSENHOR CASTRO NERY'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Input value matches for label=logradouro: \"RUA MONSENHOR CASTRO NERY\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Número' com o valor '33' { label: \u001b[32m'Número'\u001b[39m, value: \u001b[32m'33'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'ENVIAR DADOS DO ENDEREÇO' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Dados do Endereço' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Dados do Endereço\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Já é motorista contratado na sua empresa?' está na página { text: \u001b[32m'Já é motorista contratado na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Já é motorista contratado na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Deseja enviar a imagem do contrato?' está na página { text: \u001b[32m'Deseja enviar a imagem do contrato?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Deseja enviar a imagem do contrato?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Perfeito! Agora informe o tipo de Veiculo:' está na página { text: \u001b[32m'Perfeito! Agora informe o tipo de Veiculo:'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Perfeito! Agora informe o tipo de Veiculo:\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o valor 'Utilitário, Truck ou Moto' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'UTILITÁRIO, TRUCK OU MOTO'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'UTILITÁRIO, TRUCK OU MOTO' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'UTILITÁRIO, TRUCK OU MOTO'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=UTILITÁRIO, TRUCK OU MOTO\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Agora precisamos da imagem do CRLV do primeiro veículo' está na página { text: \u001b[32m'Agora precisamos da imagem do CRLV do primeiro veículo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Agora precisamos da imagem do CRLV do primeiro veículo\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/MJR-1H33 - CAVALO.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/MJR-1H33 - CAVALO.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Pesquisa enviada com sucesso!' está na página { text: \u001b[32m'Pesquisa enviada com sucesso!'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Pesquisa enviada com sucesso!\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-16T14:51:48.099Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results/fluxo-novas-pesquisas-Deve-539f1-de-forma-completa-sem-erros-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "508f5f799e6b3f1da714-4098782603f206bcbfb7",
+              "file": "fluxo-novas-pesquisas.spec.js",
+              "line": 142,
+              "column": 3
+            },
+            {
+              "title": "Deve realizar uma pesquisa do tipo frota própria de forma completa, sem erros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 95176,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo usuário com o valor 'henrique.clementino' { label: \u001b[32m'usuário'\u001b[39m, value: \u001b[32m'henrique.clementino'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo senha com o valor 'Pamcary@2025' { label: \u001b[32m'Senha'\u001b[39m, value: \u001b[32m'Pamcary@2025'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'Entrar' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Entrar' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Entrar\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.' está no resultado da página { text: \u001b[32m'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no combobox com o nome de 'Tipo Vínculo' { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('combobox', { name: 'Tipo Vínculo' }).first() { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=combobox, name=Tipo Vínculo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'Frota Própria' do dropdown { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Frota Própria'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'Frota Própria' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Frota Própria'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=Frota Própria\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre um botão chamado 'Iniciar Nova Pesquisa' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Iniciar Nova Pesquisa' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Iniciar Nova Pesquisa\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Frota Própria para a filial SAO PAULO/SP. Insira o CPF do Motorista.' está na página {\n  text: \u001b[32m'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Frota Própria para a filial SAO PAULO/SP. Insira o CPF do Motorista.'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Frota Própria para a filial SAO PAULO/SP. Insira o CPF do Motorista.\"\n"
+                        },
+                        {
+                          "text": "Generated CPF: 262.657.060-55\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o CPF' com o valor 262.657.060-55 { label: \u001b[32m'Insira o CPF'\u001b[39m, value: \u001b[32m'262.657.060-55'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar cpf' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'OK. Agora informe o número do Celular do motorista' está na página { text: \u001b[32m'OK. Agora informe o número do Celular do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"OK. Agora informe o número do Celular do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o número de celular' com o valor '11961983333' { label: \u001b[32m'Insira o número de celular'\u001b[39m, value: \u001b[32m'11961983333'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar celular' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Motorista possui CNH emitida em território nacional?' está na página { text: \u001b[32m'Motorista possui CNH emitida em território nacional?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Motorista possui CNH emitida em território nacional?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'SIM' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Envie agora a imagem da Frente da CNH do motorista' está na página { text: \u001b[32m'Envie agora a imagem da Frente da CNH do motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Envie agora a imagem da Frente da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_loading_not_visible based on Verifique que nenhum loading esteja mais visível na tela {}\n"
+                        },
+                        {
+                          "text": "✅ No loading indicator is visible.\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_alert_text based on verifique o alerta 'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?' {\n  text: \u001b[32m'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Alert text found: \"O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista' está na página {\n  text: \u001b[32m'Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ótimo! Precisamos agora da imagem do QR Code da CNH do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ok. Agora, preencha os dados do endereço residencial do motorista' está na página {\n  text: \u001b[32m'Ok. Agora, preencha os dados do endereço residencial do motorista'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ok. Agora, preencha os dados do endereço residencial do motorista\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'CEP' com o valor '05128010' { label: \u001b[32m'CEP'\u001b[39m, value: \u001b[32m'05128010'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o O input 'logradouro' está preenchido com o valor 'RUA MONSENHOR CASTRO NERY' { text: \u001b[32m'RUA MONSENHOR CASTRO NERY'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "❌ Text NOT found: \"RUA MONSENHOR CASTRO NERY\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Número' com o valor '33' { label: \u001b[32m'Número'\u001b[39m, value: \u001b[32m'33'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'ENVIAR DADOS DO ENDEREÇO' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Dados do Endereço' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Dados do Endereço\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Já é motorista registrado na sua empresa?' está na página { text: \u001b[32m'Já é motorista registrado na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Já é motorista registrado na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Deseja enviar o registro de funcionário?' está na página { text: \u001b[32m'Deseja enviar o registro de funcionário?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Deseja enviar o registro de funcionário?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Pesquisa enviada com sucesso!' está na página { text: \u001b[32m'Pesquisa enviada com sucesso!'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Pesquisa enviada com sucesso!\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-16T14:52:51.705Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results/fluxo-novas-pesquisas-Deve-453ee-de-forma-completa-sem-erros-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "508f5f799e6b3f1da714-bd273a69e59aa8f15a54",
+              "file": "fluxo-novas-pesquisas.spec.js",
+              "line": 269,
+              "column": 3
+            },
+            {
+              "title": "Deve realizar uma pesquisa do tipo Outras Funções de forma completa, sem erros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 95218,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo usuário com o valor 'henrique.clementino' { label: \u001b[32m'usuário'\u001b[39m, value: \u001b[32m'henrique.clementino'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo senha com o valor 'Pamcary@2025' { label: \u001b[32m'Senha'\u001b[39m, value: \u001b[32m'Pamcary@2025'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'Entrar' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Entrar' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Entrar\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.' está no resultado da página { text: \u001b[32m'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no combobox com o nome de 'Tipo Vínculo' { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByLabel('Tipo Vínculo').first() { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=combobox, name=Tipo Vínculo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'Outras Funções' do dropdown { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Outras Funções (Não Motorista)'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'Outras Funções (Não Motorista)' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Outras Funções (Não Motorista)'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=Outras Funções (Não Motorista)\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo Ocupação Funcional com o valor 'Motorista' { label: \u001b[32m'Ocupação Funcional *'\u001b[39m, value: \u001b[32m'Motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' apareceu na tela { text: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"CHEFE DE DEPARTAMENTO DE MOTORISTAS\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' do dropdown de Ocupação Funcional { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=CHEFE DE DEPARTAMENTO DE MOTORISTAS\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre um botão chamado 'Iniciar Nova Pesquisa' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Iniciar Nova Pesquisa' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Iniciar Nova Pesquisa\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Outras Funções (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.' está na página {\n  text: \u001b[32m'Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Outras Funções (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Outras Funções (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.\"\n"
+                        },
+                        {
+                          "text": "Generated CPF: 875.006.226-35\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o CPF' com o valor 875.006.226-35 { label: \u001b[32m'Insira o CPF'\u001b[39m, value: \u001b[32m'875.006.226-35'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar cpf' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'OK. Agora informe o número do Celular do pesquisado' está na página { text: \u001b[32m'OK. Agora informe o número do Celular do pesquisado'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"OK. Agora informe o número do Celular do pesquisado\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o número de celular' com o valor '11961983333' { label: \u001b[32m'Insira o número de celular'\u001b[39m, value: \u001b[32m'11961983333'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar celular' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'O CPF possui CNH e deseja enviar a foto e o QRCode?' está na página { text: \u001b[32m'O CPF possui CNH e deseja enviar a foto e o QRCode?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"O CPF possui CNH e deseja enviar a foto e o QRCode?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'SIM' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Envie agora a imagem da Frente da CNH da pessoa pesquisada' está na página { text: \u001b[32m'Envie agora a imagem da Frente da CNH da pessoa pesquisada'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Envie agora a imagem da Frente da CNH da pessoa pesquisada\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_loading_not_visible based on Verifique que nenhum loading esteja mais visível na tela {}\n"
+                        },
+                        {
+                          "text": "✅ No loading indicator is visible.\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_alert_text based on verifique o alerta 'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?' {\n  text: \u001b[32m'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Alert text found: \"O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada' está na página {\n  text: \u001b[32m'Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ok. Agora, preencha os dados do endereço residencial do pesquisado' está na página {\n  text: \u001b[32m'Ok. Agora, preencha os dados do endereço residencial do pesquisado'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ok. Agora, preencha os dados do endereço residencial do pesquisado\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'CEP' com o valor '05128010' { label: \u001b[32m'CEP'\u001b[39m, value: \u001b[32m'05128010'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o O input 'logradouro' está preenchido com o valor 'RUA MONSENHOR CASTRO NERY' { text: \u001b[32m'RUA MONSENHOR CASTRO NERY'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "❌ Text NOT found: \"RUA MONSENHOR CASTRO NERY\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Número' com o valor '33' { label: \u001b[32m'Número'\u001b[39m, value: \u001b[32m'33'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'ENVIAR DADOS DO ENDEREÇO' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Dados do Endereço' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Dados do Endereço\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Já é pessoa contratada na sua empresa?' está na página { text: \u001b[32m'Já é pessoa contratada na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Já é pessoa contratada na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Deseja enviar o registro de funcionário?' está na página { text: \u001b[32m'Deseja enviar o registro de funcionário?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Deseja enviar o registro de funcionário?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'Favor enviar a imagem do Registro de Funcionário' está na página { text: \u001b[32m'Favor enviar a imagem do Registro de Funcionário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Favor enviar a imagem do Registro de Funcionário\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Pesquisa enviada com sucesso!' está na página { text: \u001b[32m'Pesquisa enviada com sucesso!'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Pesquisa enviada com sucesso!\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-16T14:53:24.445Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results/fluxo-novas-pesquisas-Deve-ef8e2-de-forma-completa-sem-erros-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "508f5f799e6b3f1da714-90a8b8146dbf7702482e",
+              "file": "fluxo-novas-pesquisas.spec.js",
+              "line": 380,
+              "column": 3
+            },
+            {
+              "title": "Deve realizar uma pesquisa do tipo Terceiros de forma completa, sem erros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 500000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 1,
+                      "status": "passed",
+                      "duration": 94998,
+                      "errors": [],
+                      "stdout": [
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo usuário com o valor 'henrique.clementino' { label: \u001b[32m'usuário'\u001b[39m, value: \u001b[32m'henrique.clementino'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on preencha o campo senha com o valor 'Pamcary@2025' { label: \u001b[32m'Senha'\u001b[39m, value: \u001b[32m'Pamcary@2025'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'Entrar' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Entrar' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Entrar'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Entrar\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.' está no resultado da página { text: \u001b[32m'TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"TELERISCO - INFORMACOES INTEGRADAS DE RISCOS S.A.\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no combobox com o nome de 'Tipo Vínculo', { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('combobox', { name: 'Tipo Vínculo' }).first() { role: \u001b[32m'combobox'\u001b[39m, name: \u001b[32m'Tipo Vínculo'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=combobox, name=Tipo Vínculo\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'Terceiros (Não Motorista)' do dropdown { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Terceiros (Não Motorista)'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'Terceiros (Não Motorista)' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'Terceiros (Não Motorista)'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=Terceiros (Não Motorista)\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Ocupação Funcional' com o valor 'Motorista' { label: \u001b[32m'Ocupação Funcional *'\u001b[39m, value: \u001b[32m'Motorista'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' apareceu na tela { text: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"CHEFE DE DEPARTAMENTO DE MOTORISTAS\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Selecione a opção 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' do dropdown de 'Ocupação Funcional' { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('option', { name: 'CHEFE DE DEPARTAMENTO DE MOTORISTAS' }).first() { role: \u001b[32m'option'\u001b[39m, name: \u001b[32m'CHEFE DE DEPARTAMENTO DE MOTORISTAS'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=option, name=CHEFE DE DEPARTAMENTO DE MOTORISTAS\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre um botão chamado 'Iniciar Nova Pesquisa' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Iniciar Nova Pesquisa' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Iniciar Nova Pesquisa'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Iniciar Nova Pesquisa\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Terceiros (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.' está na página {\n  text: \u001b[32m\"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Terceiros (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.'\"\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "❌ Text NOT found: \"Bem vindo ao chatbot TELERISCO! Agora iniciaremos sua pesquisa de Terceiros (Não Motorista) para a filial SAO PAULO/SP. Insira o CPF da Pessoa.'\"\n"
+                        },
+                        {
+                          "text": "Generated CPF: 562.843.526-03\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o CPF' com o valor 562.843.526-03 { label: \u001b[32m'Insira o CPF'\u001b[39m, value: \u001b[32m'562.843.526-03'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar cpf' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'OK. Agora informe o número do Celular do pesquisado' está na página { text: \u001b[32m'OK. Agora informe o número do Celular do pesquisado'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"OK. Agora informe o número do Celular do pesquisado\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Insira o número de celular' com o valor '11961983333' { label: \u001b[32m'Insira o número de celular'\u001b[39m, value: \u001b[32m'11961983333'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão de 'enviar celular' do chatbot { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'O CPF possui CNH e deseja enviar a foto e o QRCode?' está na página { text: \u001b[32m'O CPF possui CNH e deseja enviar a foto e o QRCode?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"O CPF possui CNH e deseja enviar a foto e o QRCode?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Encontre o botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'SIM' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'SIM'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=SIM\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Envie agora a imagem da Frente da CNH da pessoa pesquisada' está na página { text: \u001b[32m'Envie agora a imagem da Frente da CNH da pessoa pesquisada'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Envie agora a imagem da Frente da CNH da pessoa pesquisada\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-VANESSA.png'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_loading_not_visible based on Verifique que nenhum loading esteja mais visível na tela {}\n"
+                        },
+                        {
+                          "text": "✅ No loading indicator is visible.\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_alert_text based on verifique o alerta 'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?' {\n  text: \u001b[32m'O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Alert text found: \"O CPF da CNH não corresponde ao CPF informado, deseja continuar mesmo assim?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada' está na página {\n  text: \u001b[32m'Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ótimo! Precisamos agora da imagem do QR Code da CNH da pessoa pesquisada\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/CNH-QRCODE.jpg'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Ok. Agora, preencha os dados do endereço residencial do pesquisado' está na página {\n  text: \u001b[32m'Ok. Agora, preencha os dados do endereço residencial do pesquisado'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Ok. Agora, preencha os dados do endereço residencial do pesquisado\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'CEP' com o valor '05128010' { label: \u001b[32m'CEP'\u001b[39m, value: \u001b[32m'05128010'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: verify_input_value based on Verifique se o O input 'logradouro' está preenchido com o valor 'RUA MONSENHOR CASTRO NERY' { label: \u001b[32m'logradouro'\u001b[39m, expectedValue: \u001b[32m'RUA MONSENHOR CASTRO NERY'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Input value matches for label=logradouro: \"RUA MONSENHOR CASTRO NERY\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: fill_input based on Preencha o campo 'Número' com o valor '33' { label: \u001b[32m'Número'\u001b[39m, value: \u001b[32m'33'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Clique no botão 'ENVIAR DADOS DO ENDEREÇO' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Dados do Endereço' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Dados do Endereço'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Dados do Endereço\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Já é pessoa contratada na sua empresa?' está na página { text: \u001b[32m'Já é pessoa contratada na sua empresa?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Já é pessoa contratada na sua empresa?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Deseja enviar a imagem do contrato?' está na página { text: \u001b[32m'Deseja enviar a imagem do contrato?'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Deseja enviar a imagem do contrato?\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_last_element based on Encontre o último botão com o texto 'Sim' e clique nele { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Sim'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on last matching element: role=button, name=Sim\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on Verifique se o texto 'Favor enviar a imagem do contrato' está na página { text: \u001b[32m'Favor enviar a imagem do contrato'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Favor enviar a imagem do contrato\"\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: choose_file based on Envie a imagem que se encontra no caminho a seguir '/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf' {\n  imagePath: \u001b[32m'/home/henrique/Documents/telerisco/automatizacao/AI-automate/images/ADITIVO CONTRATO BARBOSA - MARCOS GOMES.pdf'\u001b[39m\n}\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: click_element based on Agora clique no botão 'Enviar Formulário' { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "FOUND A TARGET TO CLICK? getByRole('button', { name: 'Enviar Formulário' }).first() { role: \u001b[32m'button'\u001b[39m, name: \u001b[32m'Enviar Formulário'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Clicked on element: role=button, name=Enviar Formulário\n"
+                        },
+                        {
+                          "text": "🤖 Autobot decided to: check_text based on verifique se o texto 'Pesquisa enviada com sucesso!' está na página { text: \u001b[32m'Pesquisa enviada com sucesso!'\u001b[39m }\n"
+                        },
+                        {
+                          "text": "✅ Text found: \"Pesquisa enviada com sucesso!\"\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2025-12-16T14:54:26.911Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "video",
+                          "contentType": "video/webm",
+                          "path": "/home/henrique/Documents/telerisco/automatizacao/AI-automate/test-results/fluxo-novas-pesquisas-Deve-35b26-de-forma-completa-sem-erros-chromium/video.webm"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "508f5f799e6b3f1da714-97e21862fefc62634fed",
+              "file": "fluxo-novas-pesquisas.spec.js",
+              "line": 496,
+              "column": 3
+            }
+          ]
         }
-    ],
-    "errors": [],
-    "stats": {
-        "total": 2,
-        "expected": 2,
-        "unexpected": 0,
-        "flaky": 0,
-        "skipped": 0,
-        "passed": 2,
-        "failed": 0,
-        "duration": 4145
+      ]
     }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-12-16T14:51:46.942Z",
+    "duration": 255103.85700000002,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
 }

@@ -11,26 +11,41 @@ import {
 } from '../../projects/data/projects.ts';
 
 interface PlaywrightReportJson {
-  stats?: PlaywrightReportStats;
+  stats?: PlaywrightRawStats;
   suites?: PlaywrightSuite[];
+}
+
+interface PlaywrightRawStats {
+  expected?: number;
+  skipped?: number;
+  unexpected?: number;
+  flaky?: number;
+  duration?: number;
 }
 
 interface PlaywrightSuite {
-  title: string;
+  title?: string;
   suites?: PlaywrightSuite[];
-  tests?: PlaywrightJsonTest[];
+  specs?: PlaywrightSpec[];
 }
 
-interface PlaywrightJsonTest {
-  title: string;
-  testId?: string;
+interface PlaywrightSpec {
+  title?: string;
+  id?: string;
+  tests?: PlaywrightSpecTest[];
+}
+
+interface PlaywrightSpecTest {
+  projectId?: string;
+  projectName?: string;
   results?: PlaywrightTestAttempt[];
 }
 
 interface PlaywrightTestAttempt {
   status: PlaywrightAttemptStatus;
   duration?: number;
-  error?: { message?: string };
+  error?: { message?: string } | null;
+  errors?: { message?: string }[];
   stderr?: string[];
 }
 
@@ -70,18 +85,6 @@ export interface PlaywrightReportSummary {
   passRate: number;
 }
 
-function toStats(raw?: PlaywrightReportStats): PlaywrightReportStats {
-  return {
-    total: raw?.total ?? 0,
-    passed: raw?.passed ?? 0,
-    failed: raw?.failed ?? 0,
-    flaky: raw?.flaky ?? 0,
-    skipped: raw?.skipped ?? 0,
-    unexpected: raw?.unexpected ?? 0,
-    duration: raw?.duration ?? 0,
-  };
-}
-
 function collectTests(
   suites: PlaywrightSuite[] = [],
   parents: string[] = []
@@ -90,24 +93,33 @@ function collectTests(
 
   suites.forEach((suite) => {
     const suitePath = suite.title ? [...parents, suite.title] : parents;
-    suite.tests?.forEach((test) => {
-      const attempts = test.results ?? [];
-      const status = deriveTestStatus(attempts);
-      const durationMs = attempts.reduce(
-        (acc, attempt) => acc + (attempt.duration ?? 0),
-        0
-      );
-      const errorMessage = attempts.find((attempt) => attempt.error)?.error
-        ?.message;
+    suite.specs?.forEach((spec) => {
+      const specPath = spec.title ? [...suitePath, spec.title] : suitePath;
 
-      tests.push({
-        id: test.testId ?? [...suitePath, test.title].join(' / '),
-        title: test.title,
-        fullTitle: [...suitePath, test.title].filter(Boolean).join(' / '),
-        status,
-        durationMs,
-        retries: Math.max(0, attempts.length - 1),
-        errorMessage,
+      spec.tests?.forEach((specTest, index) => {
+        const attempts = specTest.results ?? [];
+        const status = deriveTestStatus(attempts);
+        const durationMs = attempts.reduce(
+          (acc, attempt) => acc + (attempt.duration ?? 0),
+          0
+        );
+        const errorMessage = extractErrorMessage(attempts);
+        const projectLabel = specTest.projectName ?? specTest.projectId;
+        const testTitle = projectLabel
+          ? `${spec.title ?? 'Sem titulo'} [${projectLabel}]`
+          : spec.title ?? 'Sem titulo';
+        const idCandidates = [spec.id, projectLabel];
+        const fallbackId = [...specPath, String(index)].join(' / ');
+
+        tests.push({
+          id: idCandidates.filter(Boolean).join('-') || fallbackId,
+          title: testTitle,
+          fullTitle: [...suitePath, testTitle].filter(Boolean).join(' / '),
+          status,
+          durationMs,
+          retries: Math.max(0, attempts.length - 1),
+          errorMessage,
+        });
       });
     });
 
@@ -117,6 +129,57 @@ function collectTests(
   });
 
   return tests;
+}
+
+function extractErrorMessage(attempts: PlaywrightTestAttempt[]) {
+  for (const attempt of attempts) {
+    const errorMessage =
+      attempt.error?.message ??
+      attempt.errors?.find((entry) => entry.message)?.message;
+    if (errorMessage) {
+      return errorMessage;
+    }
+  }
+
+  return undefined;
+}
+
+function buildStatsFromTests(
+  rawStats: PlaywrightRawStats | undefined,
+  tests: PlaywrightReportTest[]
+): PlaywrightReportStats {
+  const counters = tests.reduce(
+    (acc, test) => {
+      acc.total += 1;
+      acc.duration += test.durationMs;
+
+      if (test.status === 'passed') {
+        acc.passed += 1;
+      } else if (test.status === 'failed') {
+        acc.failed += 1;
+      } else if (test.status === 'flaky') {
+        acc.flaky += 1;
+      } else {
+        acc.skipped += 1;
+      }
+
+      return acc;
+    },
+    { total: 0, passed: 0, failed: 0, flaky: 0, skipped: 0, duration: 0 }
+  );
+
+  return {
+    total: counters.total,
+    passed: counters.passed,
+    failed: counters.failed,
+    flaky: counters.flaky,
+    skipped: counters.skipped,
+    unexpected: rawStats?.unexpected ?? counters.failed,
+    duration:
+      typeof rawStats?.duration === 'number'
+        ? Math.round(rawStats.duration)
+        : counters.duration,
+  };
 }
 
 function deriveTestStatus(
@@ -168,15 +231,17 @@ async function fetchPlaywrightReport(
   }
 
   const payload = (await response.json()) as PlaywrightReportJson;
-  const stats = toStats(payload.stats);
+  const tests = collectTests(payload.suites);
 
-  if (!stats.total) {
+  if (!tests.length) {
     return null;
   }
 
+  const stats = buildStatsFromTests(payload.stats, tests);
+
   return {
     stats,
-    tests: collectTests(payload.suites),
+    tests,
     passRate: computePassRate(stats),
   };
 }
