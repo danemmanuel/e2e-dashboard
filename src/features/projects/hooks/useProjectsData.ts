@@ -1,6 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchGitlabBranches, isGitlabConfigured } from '../api/gitlab.ts';
-import { projects, type BranchInfo, type ProjectInfo } from '../data/projects.ts';
+import {
+  projects,
+  type BranchInfo,
+  type ProjectInfo,
+} from '../data/projects.ts';
 import {
   buildRunFromStats,
   deriveBranchStatusFromStats,
@@ -73,7 +77,10 @@ function applyProjectMetrics(
     }
 
     const branchUpdatedAt = new Date(branch.updatedAt).getTime();
-    if (!Number.isNaN(branchUpdatedAt) && branchUpdatedAt > latestRunTimestamp) {
+    if (
+      !Number.isNaN(branchUpdatedAt) &&
+      branchUpdatedAt > latestRunTimestamp
+    ) {
       latestRunTimestamp = branchUpdatedAt;
       latestRunAt = branch.updatedAt;
     }
