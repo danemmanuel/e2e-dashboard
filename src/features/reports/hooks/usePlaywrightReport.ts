@@ -379,7 +379,7 @@ function computePassRate(stats: PlaywrightReportStats) {
   return Math.round((stats.passed / stats.total) * 100);
 }
 
-async function fetchPlaywrightReport(
+export async function fetchPlaywrightReport(
   project: ProjectInfo,
   branchId: string
 ): Promise<PlaywrightReportSummary | null> {
