@@ -20,7 +20,12 @@ interface ReportStatsProps {
   tests?: PlaywrightReportTest[];
 }
 
-export function ReportStats({ stats, passRate, status, tests }: ReportStatsProps) {
+export function ReportStats({
+  stats,
+  passRate,
+  status,
+  tests,
+}: ReportStatsProps) {
   const summaryItems = [
     { label: 'Cenarios totais', value: stats.total },
     { label: 'Sucesso', value: stats.passed },
@@ -80,22 +85,26 @@ export function ReportStats({ stats, passRate, status, tests }: ReportStatsProps
       tests.forEach((test, index) => {
         ensureSpace(16);
         doc.setFont('helvetica', 'bold');
-        doc.text(`${index + 1}. ${test.fullTitle || test.title}`, margin, cursorY);
+        doc.text(
+          `${index + 1}. ${test.fullTitle || test.title}`,
+          margin,
+          cursorY,
+        );
         cursorY += 6;
 
         doc.setFont('helvetica', 'normal');
         addTextBlock(
           `Status: ${test.status} | Duracao: ${formatDurationMs(
-            test.durationMs
-          )} | Retries: ${test.retries}`
+            test.durationMs,
+          )} | Retries: ${test.retries}`,
         );
 
         if (test.errorMessage) {
           const errorLines = doc.splitTextToSize(
             `Erro: ${test.errorMessage}`,
-            pageWidth - margin * 2
+            pageWidth - margin * 2,
           );
-          errorLines.forEach((line) => addTextBlock(line));
+          errorLines.forEach((line: any) => addTextBlock(line));
         }
       });
     } else {
@@ -116,7 +125,11 @@ export function ReportStats({ stats, passRate, status, tests }: ReportStatsProps
           >
             <Typography variant='h6'>Dados do Último Report</Typography>
             <Stack direction='row' spacing={1} alignItems='center'>
-              <Button variant='outlined' size='small' onClick={handleGeneratePdf}>
+              <Button
+                variant='outlined'
+                size='small'
+                onClick={handleGeneratePdf}
+              >
                 Gerar PDF
               </Button>
               <StatusChip status={status} />
