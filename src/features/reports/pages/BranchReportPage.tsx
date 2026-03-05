@@ -57,7 +57,7 @@ export function BranchReportPage() {
       ? warnings.length === 1
         ? warnings[0]
         : `Ocorreram falhas ao sincronizar algumas branches. ${warnings.join(
-            ' '
+            ' ',
           )}`
       : '';
 
@@ -153,6 +153,7 @@ export function BranchReportPage() {
           stats={playwrightReport.stats}
           passRate={playwrightReport.passRate}
           status={derivedStatus}
+          tests={playwrightReport.tests}
         />
       )}
 

@@ -46,31 +46,31 @@ function normalizeReportSegment(value: string) {
 
 function buildBranchReportBase(
   project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
-  branchId: string
+  branchId: string,
 ) {
   const projectSegment = normalizeReportSegment(
-    project.reportSlug ?? project.id
+    project.reportSlug ?? project.id,
   );
   return `/reports/${projectSegment}/${normalizeReportSegment(branchId)}`;
 }
 
 export function buildBranchReportPath(
   project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
-  branchId: string
+  branchId: string,
 ) {
   return `${buildBranchReportBase(project, branchId)}/index.html`;
 }
 
 export function buildBranchReportJsonPath(
   project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
-  branchId: string
+  branchId: string,
 ) {
-  return `${buildBranchReportBase(project, branchId)}/report.json`;
+  return `${buildBranchReportBase(project, branchId)}/results.json`;
 }
 
 export function buildBranchReportDataPath(
   project: Pick<ProjectInfo, 'id' | 'reportSlug'>,
-  branchId: string
+  branchId: string,
 ) {
   return `${buildBranchReportBase(project, branchId)}/data`;
 }
@@ -492,7 +492,7 @@ export function getProjectById(id: string, source: ProjectInfo[] = projects) {
 export function getBranch(
   projectId: string,
   branchId: string,
-  source: ProjectInfo[] = projects
+  source: ProjectInfo[] = projects,
 ) {
   const project = getProjectById(projectId, source);
   return project?.branches.find((branch) => branch.id === branchId);

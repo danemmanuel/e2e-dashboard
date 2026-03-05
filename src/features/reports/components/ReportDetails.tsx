@@ -63,7 +63,7 @@ const ANSI_REGEX = /\u001B\[[0-9;]*m/g;
 
 function buildPlaywrightTestUrl(
   baseUrl: string,
-  test?: PlaywrightReportTest | null
+  test?: PlaywrightReportTest | null,
 ) {
   if (!test) {
     return baseUrl;
@@ -105,7 +105,7 @@ export function ReportDetails({
         acc[test.status] += 1;
         return acc;
       },
-      { passed: 0, failed: 0, flaky: 0, skipped: 0 }
+      { passed: 0, failed: 0, flaky: 0, skipped: 0 },
     );
   }, [tests]);
 
@@ -153,9 +153,9 @@ export function ReportDetails({
   const filteredTests = useMemo(
     () =>
       filteredGroups.flatMap((group) =>
-        group.specs.flatMap((spec) => spec.tests)
+        group.specs.flatMap((spec) => spec.tests),
       ),
-    [filteredGroups]
+    [filteredGroups],
   );
 
   useEffect(() => {
@@ -174,11 +174,11 @@ export function ReportDetails({
 
   const selectedTest = useMemo(
     () => tests.find((test) => test.id === selectedTestId) ?? null,
-    [tests, selectedTestId]
+    [tests, selectedTestId],
   );
   const selectedTestPlaywrightUrl = useMemo(
     () => buildPlaywrightTestUrl(reportSrc, selectedTest),
-    [reportSrc, selectedTest]
+    [reportSrc, selectedTest],
   );
 
   if (!tests.length) {
@@ -295,7 +295,7 @@ export function ReportDetails({
                             />
                           </ListItemButton>
                         );
-                      })
+                      }),
                     )}
                   </List>
                 ))
@@ -332,7 +332,7 @@ export function ReportDetails({
                   />
                   <Chip
                     label={`Duração: ${formatDurationMs(
-                      selectedTest.durationMs
+                      selectedTest.durationMs,
                     )}`}
                     variant='outlined'
                   />
@@ -581,6 +581,9 @@ function AttemptAttachments({
       {attachments.length ? (
         <Stack spacing={1}>
           {attachments.map((attachment, index) => {
+            if (index > 0) {
+              return null;
+            }
             const label = attachment.name || `Anexo ${index + 1}`;
             const attachmentUrl = buildAttachmentUrl(attachment.path);
 
